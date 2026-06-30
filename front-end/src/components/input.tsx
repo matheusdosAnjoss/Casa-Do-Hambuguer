@@ -1,9 +1,8 @@
-const Input = () => {
+const Input = (props: React.InputHTMLAttributes<HTMLInputElement>) => {
   return (
     <input
-      type="text"
-      placeholder="Email"
-      className="w-[350px] rounded-md border-[2px] bg-white px-2 py-2 text-xs text-[#32343E] outline-none"
+      {...props}
+      className="w-[350px] rounded-md border-[2px] bg-white px-2 py-2 text-xs text-[#32343E] placeholder-[#32343E] outline-none"
     />
   );
 };

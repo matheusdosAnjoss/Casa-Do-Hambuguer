@@ -1,14 +1,46 @@
+import { useState } from "react";
 import Input from "./input";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  console.log(email);
+
+  function handleSubmmit(e: React.SubmitEvent<HTMLFormElement>) {
+    e.preventDefault();
+    console.log(email);
+    console.log(password);
+  }
+
   return (
-    <div className="flex h-screen items-center justify-center bg-[#161410]">
-      <div className="flex flex-col items-center justify-center gap-2 bg-white">
-        <img src="./logo.png" alt="" />
-        <Input placeholder="E-mail" />
-        <Input placeholder="Senha" />
+    <form
+      className="flex h-screen items-center justify-center bg-[#161410]"
+      onSubmit={handleSubmmit}
+    >
+      <div className="flex flex-col items-center justify-center gap-2">
+        <img src="./logo.png" alt="" className="mb-4" />
+
+        <Input
+          placeholder="E-mail"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+
+        <Input
+          placeholder="Senha"
+          type="password"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <button className="w-full cursor-pointer rounded-md bg-[#C92A0E] py-1 text-sm text-white">
+          Login
+        </button>
+
+        {/* <button className="w-full cursor-pointer rounded-md bg-[#ffff] py-1 text-sm text-[#C92A0E]">
+          Não tenho uma conta
+        </button> */}
       </div>
-    </div>
+    </form>
   );
 };
 

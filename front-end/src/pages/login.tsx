@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Input from "./input";
+import Input from "../components/input";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -33,7 +33,7 @@ const Login = () => {
         />
 
         <button className="w-full cursor-pointer rounded-md bg-[#C92A0E] py-1 text-sm text-white">
-          Login
+          Login {/* ACHO Q ESTA FALTANDO O ONCLIK AQUI CONFERERIR DEPOIS */}
         </button>
 
         {/* <button className="w-full cursor-pointer rounded-md bg-[#ffff] py-1 text-sm text-[#C92A0E]">

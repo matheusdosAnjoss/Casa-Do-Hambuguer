@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Input from "../components/input";
+import { Link } from "react-router";
 
 const Register = () => {
   const [nome, setNome] = useState("");
@@ -9,9 +10,9 @@ const Register = () => {
   const [cep, setCep] = useState("");
 
   function handleSubmmit(e: React.SubmitEvent<HTMLFormElement>) {
-      e.preventDefault();
-      
-      console.log(nome, email, senha, confimerSenha, cep)
+    e.preventDefault();
+
+    console.log(nome, email, senha, confimerSenha, cep);
   }
 
   return (
@@ -20,7 +21,9 @@ const Register = () => {
       onSubmit={handleSubmmit}
     >
       <div className="flex flex-col items-center justify-center gap-2">
-        <img src="./logo.png" alt="" className="mb-4" />
+        <Link to="/">
+          <img src="./logo.png" alt="" className="mb-4" />
+        </Link>
 
         <Input placeholder="Nome" onChange={(e) => setNome(e.target.value)} />
 

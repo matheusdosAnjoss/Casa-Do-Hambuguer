@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Input from "../components/input";
 import { Link } from "react-router";
+import Button from "../components/Button";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -21,7 +22,7 @@ const Login = () => {
     >
       <div className="flex flex-col items-center justify-center gap-2">
         <Link to="/">
-          <img src="./logo.png" alt="" className="mb-4" />
+          <img src="./logo.png" alt="" className="mb-1" />
         </Link>
         ;
         <Input
@@ -33,12 +34,11 @@ const Login = () => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="w-full cursor-pointer rounded-md bg-[#C92A0E] py-1 text-sm text-white">
-          Login {/* ACHO Q ESTA FALTANDO O ONCLIK AQUI CONFERERIR DEPOIS */}
-        </button>
-        {/* <button className="w-full cursor-pointer rounded-md bg-[#ffff] py-1 text-sm text-[#C92A0E]">
-          Não tenho uma conta
-        </button> */}
+
+        <Button title="Login" variant="default" />
+
+        <Button title="Não teno uma conta" variant="outline" />
+
       </div>
     </form>
   );

@@ -34,10 +34,11 @@ const Login = () => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-
         <Button title="Login" variant="default" />
 
-        <Button title="Não teno uma conta" variant="outline" />
+        <Link to="/register" className="w-full">
+          <Button title="Não tenho uma conta" variant="outline" />
+        </Link>
 
       </div>
     </form>

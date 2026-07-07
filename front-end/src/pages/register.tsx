@@ -54,8 +54,9 @@ const Register = () => {
 
         <Button title={"Cria Conta"} variant={"default"}/>
 
-        <Button title={"Já tenho uma conta"} variant={"outline"}/>
-  
+        <Link to="/login" className="w-full">
+          <Button title="Já tenho uma conta" variant="outline" />
+        </Link>
       </div>
     </form>
   );

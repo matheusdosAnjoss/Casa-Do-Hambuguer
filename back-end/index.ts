@@ -1,11 +1,12 @@
 import express from "express";
 
-const app = express()
+const app = express();
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World')
-// })
+app.get("/teste", (req, res) => {
+    res.send("Hello World");
+    console.log("Sevidor conectado");
+});
 
 app.listen(3000, () => {
-  console.log('Servidor rodando em http://localhost:3000')
-}) 
+  console.log("Servidor rodando em http://localhost:3000");
+}); // node --watch index.ts

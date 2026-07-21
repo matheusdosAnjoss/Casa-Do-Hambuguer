@@ -11,12 +11,10 @@ model User {
   id    String @id @default(uuid())
   email String
   name  String
+  password String
+  cep String
+  
 }
 
 // npx prisma db push = Envia as alterações para o banco de dados
 // npx prisma db pull= Puxa a estrutura atual do banco de dados
-
-model produto {
-  id Int @id @default(autoincrement())
-  name String?
-}

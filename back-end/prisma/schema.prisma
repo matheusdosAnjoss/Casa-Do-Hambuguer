@@ -17,4 +17,7 @@ model User {
 }
 
 // npx prisma db push = Envia as alterações para o banco de dados
+
 // npx prisma db pull= Puxa a estrutura atual do banco de dados
+
+// npx prisma studio = é um comando do Prisma ORM que abre uma interface gráfica (GUI) no seu navegador para você visualizar e manipular os dados do seu banco de dados de forma simples e intuitiva.

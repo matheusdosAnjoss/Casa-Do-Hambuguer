@@ -13,7 +13,12 @@ const prisma = new PrismaClient({ adapter });
 export { prisma };
 
 export async function connection() {
-    await prisma.$connect()
-    console.log("Conectado com o BD.");
+    try {
+        await prisma.$connect()
+        console.log("Conectado com o BD.");
+    } catch (error) {
+        console.log(error)
+    }
+    
 }
 

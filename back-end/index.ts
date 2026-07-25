@@ -1,18 +1,38 @@
 import express from "express";
+import cors from "cors";
 import { connection } from "./src/db.js";
+import { prisma } from "./src/db.js";
 
 const app = express();
-connection()
+app.use(express.json());
+app.use(cors());
+connection();
 // console.log(process.env.DATABASE_URL)
-app.get("/", (req, res) => {
-    res.send("Hello World");
-    console.log("Sevidor conectado");
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await prisma.user.findFirst({
+    where: { email: email },
+  });
+
+  if (!user) {
+    return res.status(401).json({ error: "Usuário não encontrado" });
+  }
+
+  if (user.password !== password) {
+    return res.status(401).json({ error: "Senha incorreta" });
+  }
+
+  
+
+  res.json({ message: "Login realizado com sucesso", user });
 });
 
 app.listen(3000, () => {
-  console.log("Servidor rodando em http://localhost:3000 -2");
+  console.log("Servidor rodando em http://localhost:3000");
 });
 
-// node --watch index.ts = tenta executar o arquivo TypeScript diretamente usando o próprio manipulador de scripts nativo do Node.js com a flag de recarregamento automático (--watch).
-
+// INICIA O LOCALHOST
 //  npx tsx index.ts = é o comando que você usa no terminal para executar um arquivo TypeScript diretamente, sem precisar compilá-lo manualmente para JavaScript antes.
+
+// node --watch index.ts = tenta executar o arquivo TypeScript diretamente usando o próprio manipulador de scripts nativo do Node.js com a flag de recarregamento automático (--watch).

@@ -23,8 +23,6 @@ app.post("/login", async (req, res) => {
     return res.status(401).json({ error: "Senha incorreta" });
   }
 
-  
-
   res.json({ message: "Login realizado com sucesso", user });
 });
 

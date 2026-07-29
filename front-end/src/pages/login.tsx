@@ -9,10 +9,19 @@ const Login = () => {
 
   console.log(email);
 
-  function handleSubmmit(e: React.SubmitEvent<HTMLFormElement>) {
+  async function handleSubmmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(email);
-    console.log(password);
+ 
+
+    const response = await fetch("http://localhost:3000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+  
   }
 
   return (
@@ -34,12 +43,10 @@ const Login = () => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button title="Login" variant="default" />
-
+        <Button title="Login" type="submit" variant={"default"} />
         <Link to="/register" className="w-full">
           <Button title="Não tenho uma conta" variant="outline" />
         </Link>
-
       </div>
     </form>
   );

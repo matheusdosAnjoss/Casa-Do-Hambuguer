@@ -9,21 +9,32 @@ app.use(cors());
 connection();
 // console.log(process.env.DATABASE_URL)
 app.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const user = await prisma.user.findFirst({
-    where: { email: email },
-  });
+    const user = await prisma.user.findFirst({
+      where: { email: email },
+    });
 
-  if (!user) {
-    return res.status(401).json({ error: "Usuário não encontrado" });
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ error: "E-mail e senha são obrigatórios." });
+    }
+
+    if (!user) {
+      return res.status(401).json({ error: "Usuário não encontrado" });
+    }
+
+    if (user.password !== password) {
+      return res.status(401).json({ error: "Senha incorreta" });
+    }
+
+    res.status(200).json({ message: "Login realizado com sucesso", user });
+    
+  } catch (error) {
+    return res.status(500).json({ message: "Erro no servidor" });
   }
-
-  if (user.password !== password) {
-    return res.status(401).json({ error: "Senha incorreta" });
-  }
-
-  res.json({ message: "Login realizado com sucesso", user });
 });
 
 app.listen(3000, () => {

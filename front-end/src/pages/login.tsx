@@ -11,7 +11,6 @@ const Login = () => {
 
   async function handleSubmmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
- 
 
     const response = await fetch("http://localhost:3000/login", {
       method: "POST",
@@ -21,7 +20,6 @@ const Login = () => {
 
     const data = await response.json();
     console.log(data);
-  
   }
 
   return (
@@ -29,7 +27,7 @@ const Login = () => {
       className="flex h-screen items-center justify-center bg-[#161410]"
       onSubmit={handleSubmmit}
     >
-      <div className="flex flex-col items-center justify-center gap-2">
+      <div className="flex flex-col justify-center gap-2">
         <Link to="/">
           <img src="./logo.png" alt="" className="mb-1" />
         </Link>
@@ -43,6 +41,9 @@ const Login = () => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
+        <p className="text-left text-sm font-bold text-red-500">
+          Usuário não encontrado
+        </p>
         <Button title="Login" type="submit" variant={"default"} />
         <Link to="/register" className="w-full">
           <Button title="Não tenho uma conta" variant="outline" />

@@ -14,26 +14,30 @@ const Login = () => {
     e.preventDefault();
 
     try {
+      if (!email || !password) {
+        setError("E-mail e senha são obrigatórios");
+        return;
+      }
+
       const response = await fetch("http://localhost:3000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
-      if (response.status == 401) {
+      if (response.status === 401) {
         setError("Usuario não encontrado");
       }
 
-      if (response.status == 400) {
+      if (response.status === 400) {
         setError("E-mail e senha são obrigatórios");
       }
 
-      if (response.status == 200) {
+      if (response.status === 200) {
         setError("");
         const data = await response.json();
         console.log(data);
       }
-      ;
     } catch (error) {
       console.log(error);
       return;
@@ -54,6 +58,7 @@ const Login = () => {
           <Input
             placeholder="E-mail"
             onChange={(e) => setEmail(e.target.value)}
+            type="email"
           />
           <Input
             placeholder="Senha"

@@ -9,11 +9,30 @@ const Register = () => {
   const [senha, setSenha] = useState("");
   const [confimerSenha, setCorfimeSenha] = useState("");
   const [cep, setCep] = useState("");
+  const [error, setError] = useState("");
 
-  function handleSubmmit(e: React.SubmitEvent<HTMLFormElement>) {
+  async function handleSubmmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    console.log(nome, email, senha, confimerSenha, cep);
+    try {
+      const response = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome, email, senha, cep }),
+      });
+            //MIN: 14 min
+      switch (response.status) {
+
+      }
+
+
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+
+    // console.log(nome, email, senha, confimerSenha, cep);
   }
 
   return (
@@ -21,9 +40,9 @@ const Register = () => {
       className="flex h-screen items-center justify-center bg-[#161410]"
       onSubmit={handleSubmmit}
     >
-      <div className="flex flex-col items-center justify-center gap-2">
+      <div className="flex flex-col justify-center gap-2">
         <Link to="/">
-          <img src="./logo.png" alt="" className="mb-4" />
+          <img src="./logo.png" alt="" className="mb-4 mx-auto" />
         </Link>
 
         <Input placeholder="Nome" onChange={(e) => setNome(e.target.value)} />
@@ -51,12 +70,15 @@ const Register = () => {
           type="text"
           onChange={(e) => setCep(e.target.value)}
         />
+        <p className="font-bold text-red-500">{error}</p>
 
-        <Button title={"Cria Conta"} variant={"default"}/>
+        <div className="mt-3 flex w-full flex-col gap-2">
+          <Button title={"Cria Conta"} variant={"default"} type="submit" />
 
-        <Link to="/login" className="w-full">
-          <Button title="Já tenho uma conta" variant="outline" />
-        </Link>
+          <Link to="/login" className="w-full">
+            <Button title="Já tenho uma conta" variant="outline" />
+          </Link>
+        </div>
       </div>
     </form>
   );

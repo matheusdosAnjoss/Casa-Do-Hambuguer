@@ -7,7 +7,7 @@ const Register = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [confimerSenha, setCorfimeSenha] = useState("");
+  const [cofirmSenha, setCorfimeSenha] = useState("");
   const [cep, setCep] = useState("");
   const [error, setError] = useState("");
 
@@ -15,18 +15,48 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3000/register", {
+      if (!nome || !email || !senha || !cep) {
+        setError("Todas as informações são obrigatorias");
+        return;
+      }
+
+      if (senha !== cofirmSenha) {
+        setError("Senhas não confere!");
+        return;
+      }
+
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nome, email, senha, cep }),
+        body: JSON.stringify({ name: nome, email, password: senha, cep }),
       });
-            //MIN: 14 min
-      switch (response.status) {
 
+      switch (response.status) {
+        case 409:
+          setError("Email já cadastrado");
+          break;
+        case 400:
+          setError("E-mail e senha são obrigatórios.");
+          break;
+        case 201:
+          // Sucesso - Você pode redirecionar para o login aqui
+          setNome("");
+          setEmail("");
+          setSenha("");
+          setCorfimeSenha("");
+          setCep("");
+          break;
+        case 500:
+          setError("Tente novamente mais tarde");
+          break;
+        default:
+          setError("Erro inesperado no servidor.");
       }
 
 
-      console.log(response);
+      const data = await response.json();
+      console.log(data);
+      
     } catch (error) {
       console.log(error);
       return;
@@ -42,33 +72,41 @@ const Register = () => {
     >
       <div className="flex flex-col justify-center gap-2">
         <Link to="/">
-          <img src="./logo.png" alt="" className="mb-4 mx-auto" />
+          <img src="./logo.png" alt="" className="mx-auto mb-4" />
         </Link>
 
-        <Input placeholder="Nome" onChange={(e) => setNome(e.target.value)} />
+        <Input
+          placeholder="Nome"
+          onChange={(e) => setNome(e.target.value)}
+          value={nome}
+        />
 
         <Input
           placeholder="E-maill"
           type="email"
           onChange={(e) => setEmail(e.target.value)}
+          value={email}
         />
 
         <Input
           placeholder="Senha"
           type="password"
           onChange={(e) => setSenha(e.target.value)}
+          value={senha}
         />
 
         <Input
           placeholder="Confirme sua senha"
           type="password"
           onChange={(e) => setCorfimeSenha(e.target.value)}
+          value={cofirmSenha}
         />
 
         <Input
           placeholder="CEP"
           type="text"
           onChange={(e) => setCep(e.target.value)}
+          value={cep}
         />
         <p className="font-bold text-red-500">{error}</p>
 

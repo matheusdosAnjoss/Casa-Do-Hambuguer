@@ -12,15 +12,16 @@ app.post("/login", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
 
-    const user = await prisma.user.findFirst({
-      where: { email: email },
-    });
-
     if (!email || !password) {
       return res
         .status(400)
         .json({ error: "E-mail e senha são obrigatórios." });
     }
+
+    const user = await prisma.user.findFirst({
+      where: { email: email },
+    });
+    
 
     if (!user) {
       return res.status(401).json({ error: "Usuário não encontrado" });
@@ -36,7 +37,7 @@ app.post("/login", async (req: Request, res: Response) => {
   }
 });
 
-app.post("/resgister", async (req: Request, res: Response) => {
+app.post("/register", async (req: Request, res: Response) => {
   try {
     const { name, email, password, cep } = req.body;
     // ! = verificar se é falso, ou se não envio

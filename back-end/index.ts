@@ -2,6 +2,7 @@ import express, { type Request, type Response } from "express";
 import cors from "cors";
 import { connection } from "./src/db.js";
 import { prisma } from "./src/db.js";
+import bcrypt, { hash } from 'bcrypt'
 
 const app = express();
 app.use(express.json());
@@ -18,20 +19,39 @@ app.post("/login", async (req: Request, res: Response) => {
         .json({ error: "E-mail e senha são obrigatórios." });
     }
 
+    const cleanEmail = email.trim().toLowerCase();
+
     const user = await prisma.user.findFirst({
-      where: { email: email },
+      // where: { email: email },
+      where: { 
+        email: { equals: cleanEmail, mode: 'insensitive' } 
+      },
     });
-    
 
     if (!user) {
-      return res.status(401).json({ error: "Usuário não encontrado" });
+      res.status(404).json({ error: "Usuário não encontrado" });
+      return;
     }
 
-    if (user.password !== password) {
+    const match = await bcrypt.compare(password, user?.password);
+
+    console.log(match);
+
+    if (!match) {
       return res.status(401).json({ error: "Senha incorreta" });
     }
 
-    res.status(200).json({ message: "Login realizado com sucesso", user });
+    // if (user.password !== password) {
+    //   return res.status(401).json({ error: "Senha incorreta" });
+    // }
+
+    res.status(200).json({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      cep: user.cep,
+    });
+
   } catch (error) {
     return res.status(500).json({ message: "Erro no servidor" });
   }
@@ -48,6 +68,10 @@ app.post("/register", async (req: Request, res: Response) => {
       return;
     }
 
+    const hash = await bcrypt.hash(password, 10);
+
+    // console.log(hash);
+    
     const user = await prisma.user.findFirst({
       where: {email: email},
     });
@@ -58,7 +82,7 @@ app.post("/register", async (req: Request, res: Response) => {
     }
 
     const newUser = await prisma.user.create({
-      data: { name: name, email: email, password: password, cep: cep },
+      data: { name: name, email: email, password: hash, cep: cep },
     });
               
 

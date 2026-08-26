@@ -25,12 +25,20 @@ const Login = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      if (response.status === 401) {
-        setError("Usuario não encontrado");
+      if (response.status === 404) {
+        setError("Usuário não encontrado");
       }
 
       if (response.status === 400) {
         setError("E-mail e senha são obrigatórios");
+      }
+
+      if (response.status === 401) {
+        setError("Crendencias inválidas");
+      }
+
+      if (response.status === 500) {
+        setError("Erro no servidor");
       }
 
       if (response.status === 200) {

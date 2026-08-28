@@ -2,11 +2,14 @@ import { useState } from "react";
 import Input from "../components/input";
 import { Link } from "react-router";
 import Button from "../components/Button";
+import { useNavigate } from "react-router";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   console.log(email);
 
@@ -27,23 +30,28 @@ const Login = () => {
 
       if (response.status === 404) {
         setError("Usuário não encontrado");
+        return;
       }
 
       if (response.status === 400) {
         setError("E-mail e senha são obrigatórios");
+        return;
       }
 
       if (response.status === 401) {
         setError("Crendencias inválidas");
+        return;
       }
 
       if (response.status === 500) {
         setError("Erro no servidor");
+        return;
       }
 
       if (response.status === 200) {
         setError("");
         const data = await response.json();
+        navigate("/");
         console.log(data);
       }
     } catch (error) {

@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import { prisma } from "../db.js";
-import bcrypt from 'bcrypt';
-
+import bcrypt from "bcrypt";
+import { use } from "react";
 
 export const login = async (req: Request, res: Response) => {
   try {
@@ -17,8 +17,8 @@ export const login = async (req: Request, res: Response) => {
 
     const user = await prisma.user.findFirst({
       // where: { email: email },
-      where: { 
-        email: { equals: cleanEmail, mode: 'insensitive' } 
+      where: {
+        email: { equals: cleanEmail, mode: "insensitive" },
       },
     });
 
@@ -35,17 +35,18 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ error: "Senha incorreta" });
     }
 
-    // if (user.password !== password) {
-    //   return res.status(401).json({ error: "Senha incorreta" });
-    // }
-
-    res.status(200).json({
+    const userInfos = {
       id: user.id,
       name: user.name,
       email: user.email,
       cep: user.cep,
-    });
+    };
 
+    res.cookie("user", userInfos,{
+        maxAge: 30 * 1000,
+      });
+
+    res.status(200).json(userInfos);
   } catch (error) {
     return res.status(500).json({ message: "Erro no servidor" });
   }
@@ -65,9 +66,9 @@ export const register = async (req: Request, res: Response) => {
     const hash = await bcrypt.hash(password, 10);
 
     // console.log(hash);
-    
+
     const user = await prisma.user.findFirst({
-      where: {email: email},
+      where: { email: email },
     });
 
     if (user?.email) {
@@ -78,10 +79,8 @@ export const register = async (req: Request, res: Response) => {
     const newUser = await prisma.user.create({
       data: { name: name, email: email, password: hash, cep: cep },
     });
-              
 
     res.status(201).json(newUser);
-
   } catch (error) {
     res.status(500).json({ message: "Erro no servidor" });
     return;

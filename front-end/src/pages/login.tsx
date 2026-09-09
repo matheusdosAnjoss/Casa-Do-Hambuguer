@@ -3,15 +3,20 @@ import Input from "../components/input";
 import { Link } from "react-router";
 import Button from "../components/Button";
 import { useNavigate } from "react-router";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+
+  const {setUser} = useContext(UserContext)
+
   const navigate = useNavigate();
 
-  console.log(email);
+
 
   async function handleSubmmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -53,6 +58,7 @@ const Login = () => {
         setError("");
         const data = await response.json();
         navigate("/");
+        setUser(data);
         console.log(data);
       }
     } catch (error) {

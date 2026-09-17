@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import {
@@ -11,23 +11,44 @@ import {
 
 const Header = () => {
   const { user } = useContext(UserContext);
+  const location = useLocation();
+
+  console.log(location.pathname);
+
+  const getNavItemClass = (path: string) => {
+    const baseClass =
+      "flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-md border-1";
+
+    if (location.pathname === path) {
+      return `${baseClass} text-[#161410] bg-[#F2DAAC]`;
+    } else {
+      return baseClass;
+    }
+  };
 
   return (
     <div className="bg-[#161410]">
       <div className="mx-auto flex w-full items-center justify-between p-3 md:w-[737px] md:p-0">
-        <img src="./logo.png" alt="" />
+        <Link to={"/"}>
+          <img src="./logo.png" alt="" />
+        </Link>
 
         {user ? (
           <div className="flex items-center gap-8 text-white">
-            
             <div className="flex items-center gap-3 text-[#F2DAAC]">
-              <div className="flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-md border">
-                <Box />
-              </div>
+              <Link to={"/"}>
+                <div className={getNavItemClass("/")}>
+                  <Box />
+                </div>
+              </Link>
 
-              <div className="flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-md border">
-                <LayoutDashboard />
-              </div>
+              <Link to={"/pedidos"}>
+                <div
+                  className={getNavItemClass("/pedidos")}
+                >
+                  <LayoutDashboard />
+                </div>
+              </Link>
 
               <div className="flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-md border">
                 <Plus />

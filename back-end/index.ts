@@ -2,9 +2,11 @@ import express, { type Request, type Response } from "express";
 import cors from "cors";
 import { connection } from "./src/db.js";
 import { router } from "./src/routers.js";
+import cookieParser from 'cookie-parser'
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser())
 app.use(
   cors({
     origin: "http://localhost:5173",

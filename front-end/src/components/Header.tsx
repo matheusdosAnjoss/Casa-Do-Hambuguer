@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "../contexts/UserContext";
 import {
   LogOut,
@@ -10,10 +10,29 @@ import {
 } from "lucide-react";
 
 const Header = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const location = useLocation();
 
   console.log(location.pathname);
+
+  const handleAuthUser = async () => {
+    const response = await fetch("http://localhost:3000/me", {
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      console.log("deu ruim");
+      return;
+    }
+
+    const data = await response.json();
+    console.log(data);
+    setUser(data)
+  };
+
+  useEffect(() => {
+    handleAuthUser();
+  }, []);
 
   const getNavItemClass = (path: string) => {
     const baseClass =
@@ -43,9 +62,7 @@ const Header = () => {
               </Link>
 
               <Link to={"/pedidos"}>
-                <div
-                  className={getNavItemClass("/pedidos")}
-                >
+                <div className={getNavItemClass("/pedidos")}>
                   <LayoutDashboard />
                 </div>
               </Link>

@@ -105,9 +105,13 @@ export const auth = async (req: Request, res: Response) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     res.status(200).json({ decoded });
-
   } catch (error) {
     res.status(500).json({ message: "Erro no sevidor" });
     return;
   }
+};
+
+export const logout = async (req: Request, res: Response) => {
+  res.clearCookie("user");
+  res.status(200).json({ message: "Usuario deslogado" });
 };

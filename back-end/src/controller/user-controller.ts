@@ -96,15 +96,8 @@ export const register = async (req: Request, res: Response) => {
 
 export const auth = async (req: Request, res: Response) => {
   try {
-    const token = req.cookies.user;
-
-    if (!process.env.JWT_SECRET) {
-      return;
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    res.status(200).json({ decoded });
+    const { user } = req;
+    res.status(200).json(user);
   } catch (error) {
     res.status(500).json({ message: "Erro no sevidor" });
     return;
@@ -112,6 +105,12 @@ export const auth = async (req: Request, res: Response) => {
 };
 
 export const logout = async (req: Request, res: Response) => {
-  res.clearCookie("user");
-  res.status(200).json({ message: "Usuario deslogado" });
+  const { user } = req.cookies;
+
+  if (user) {
+    res.clearCookie("user");
+    res.status(200).json({ message: "Usuario deslogado" });
+  }
+
+  console.log(user);
 };

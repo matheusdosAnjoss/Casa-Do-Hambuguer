@@ -48,7 +48,6 @@ const Header = () => {
       }
 
       setUser(null);
-
     } catch (error) {
       console.log(error);
       return;
@@ -79,23 +78,26 @@ const Header = () => {
 
         {user ? (
           <div className="flex items-center gap-8 text-white">
-            <div className="flex items-center gap-3 text-[#F2DAAC]">
-              <Link to={"/"}>
-                <div className={getNavItemClass("/")}>
-                  <Box />
-                </div>
-              </Link>
 
-              <Link to={"/pedidos"}>
-                <div className={getNavItemClass("/pedidos")}>
-                  <LayoutDashboard />
-                </div>
-              </Link>
+            {user.admin && (
+              <div className="flex items-center gap-3 text-[#F2DAAC]">
+                <Link to={"/"}>
+                  <div className={getNavItemClass("/")}>
+                    <Box />
+                  </div>
+                </Link>
 
-              <div className="flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-md border">
-                <Plus />
+                <Link to={"/pedidos"}>
+                  <div className={getNavItemClass("/pedidos")}>
+                    <LayoutDashboard />
+                  </div>
+                </Link>
+
+                <div className="flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-md border">
+                  <Plus />
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="relative cursor-pointer">
               <ShoppingCartPlus size={18} />

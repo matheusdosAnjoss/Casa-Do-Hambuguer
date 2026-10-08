@@ -8,5 +8,5 @@ export const router = Router()
 //Rostas de usuarios
 router.post("/login", login);
 router.post("/register", register);
-router.get("/me", auth)
+router.get("/me", authMiddleware , auth)
 router.post("/logout", authMiddleware, logout);

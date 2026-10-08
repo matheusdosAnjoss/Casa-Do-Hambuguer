@@ -13,7 +13,7 @@ model User {
   name  String
   password String 
   cep String
-  
+  admin Boolean @default(false)
 }
 
 // npx prisma db push = Envia as alterações para o banco de dados

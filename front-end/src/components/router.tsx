@@ -4,7 +4,7 @@ import Register from "../pages/register";
 import Home from "../pages/Home";
 import Pedidos from "../pages/Pedidos";
 import Header from "./Header";
-
+import PublicRoute from "./PublicRoute";
 
 const Layout = () => {
   return (
@@ -32,11 +32,19 @@ export const router = createBrowserRouter([
 
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
   },
 
   {
     path: "/register",
-    element: <Register />,
+    element: (
+      <PublicRoute>
+        <Register />
+      </PublicRoute>
+    ),
   },
 ]);

@@ -76,6 +76,10 @@ const Header = () => {
           <img src="./logo.png" alt="" />
         </Link>
 
+        <Link to="/login" className="text-white">
+          Login
+        </Link>
+
         {user ? (
           <div className="flex items-center gap-8 text-white">
 

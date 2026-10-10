@@ -76,15 +76,14 @@ const Header = () => {
           <img src="./logo.png" alt="" />
         </Link>
 
-        <Link to="/login" className="text-white">
+        {/* <Link to="/login" className="text-white">
           Login
-        </Link>
+        </Link> */}
 
         {user ? (
           <div className="flex items-center gap-8 text-white">
-
             {user.admin && (
-              <div className="flex items-center gap-3 text-[#F2DAAC]">
+              <div className="md:flex hidden items-center gap-3 text-[#F2DAAC]">
                 <Link to={"/"}>
                   <div className={getNavItemClass("/")}>
                     <Box />

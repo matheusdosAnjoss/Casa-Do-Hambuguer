@@ -2,6 +2,7 @@
 
 import { Hamburger } from "lucide-react";
 import { useState } from "react";
+import Product from "../components/Product";
 
 const Home = () => {
   const [category, setCategory] = useState("Hamburguer");
@@ -49,6 +50,14 @@ const Home = () => {
         >
           Porções
         </div>
+      </div>
+
+      <p className="mb-2 font-bold text-[#F2DAAC] uppercase">{category}</p>
+      <div className="flex flex-col gap-2 md:gap-4">
+        <Product />
+        <Product />
+        <Product />
+        <Product />
       </div>
     </div>
   );

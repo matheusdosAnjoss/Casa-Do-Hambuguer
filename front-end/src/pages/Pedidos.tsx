@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { UserRound, Calendar, Clock4 } from "lucide-react";
+
+import CardPedido from "../components/CardPedido";
 
 const Pedidos = () => {
   const [category, setCategory] = useState("Pendente");
@@ -50,53 +51,9 @@ const Pedidos = () => {
         </div>
       </div>
 
-      
       {/* CARDS */}
       <div className="grid grid-cols-3 gap-3">
-        <div className="rounded-md bg-[#F2DAAC] p-2 text-[#161410]">
-          <div className="flex justify-between">
-            <p>#1</p>
-            <select name="" id="" className="font-bold">
-              <option value="" defaultChecked disabled>
-                Pendente
-              </option>
-              <option value="">Retirado</option>
-              <option value="">Cancelado</option>
-            </select>
-          </div>
-
-          <div className="mt-2 flex-col gap-2">
-            <div className="flex items-center gap-2">
-              <UserRound size={16} />
-              <p className="text-xs">Jocimara</p>
-            </div>
-
-            <div className="mt-2">
-              <div className="flex items-center gap-2">
-                <Calendar size={16} />
-                <p className="text-xs">27/10/2026</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex gap-5">
-            <div className="flex items-center gap-2">
-              <Clock4 size={16} />
-              <p className="text-xs">22:35</p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <Clock4 size={16} />
-              <p className="text-xs">22:35</p>
-            </div>
-          </div>
-
-          <div className="h-[2px] w-full mt-2 bg-[#161410e8]"></div>
-
-          <p className="text-right font-bold">R$124,00</p>
-
-        </div>
-        
+        <CardPedido id={2} name="Matheus" date="05/11/2026" orderTime="22:30" deliveredTime="23:00" total={124.75} />
       </div>
     </div>
   );
